@@ -22,8 +22,16 @@ insert into shopping_history values ('milk', 9,20);
 
 
 -- Answer Query
-select product, (sum(unit_price*quantity)) as sum_up from shopping_history group by product order by product desc;
+select product, (sum(unit_price*quantity)) as total_price from shopping_history group by product order by product desc;
 
+-- Output--
+PRODUCT |	TOTAL_PRICE
+----------------------
+sprite	| 80
+milk	  | 450
+cheese	| 125
+butter	| 24
+bread	  | 61
 
 -- Task -2
 --Given 1:
@@ -59,6 +67,11 @@ select * from calls;
 select names from (select case when (sum(c.duration)>=10) then p.name end as names from phones p left outer join calls c on
                   p.phone_number = c.caller or p.phone_number = c.callee group by p.name) where names is not null order by names; 
 
+--Ouput--
+NAMES
+-----
+Anna
+Jack
 
 
 
@@ -93,7 +106,13 @@ select * from calls2;
 select names from (select case when (sum(c.duration)>=10) then p.name end as names from phone2 p left outer join calls2 c on
                                                p.phone_number = c.caller or p.phone_number = c.callee group by p.name) where names is not null order by names; 
                                                
-                                               
+ 
+ --Output--
+ NAMES
+-------
+Addison
+Ginny
+Kate
 
 --Task 3:
 -- Given 1:
@@ -120,7 +139,7 @@ insert into transactions values(-200,'2020-10-10');
 
 
 -- Answer Query
-Select ( sum(a.total) - (12- count(b.cnt ))*5 ) as result From  
+Select ( sum(a.total) - (12- count(b.cnt ))*5 ) as balance From  
 (Select sum(amount) as total , 'A' as name from  transactions  ) as a  left join  
 (Select  count(amount) as cnt  , 'A' as name
 From transactions 
@@ -129,6 +148,10 @@ group by month(date)
 having not(count(amount) <3 or  sum(amount) >-100) ) as b 
 on a.name = b.name;
 
+--Output--
+BALANCE
+--------
+2746
 
 -- Given 2:
 
@@ -164,6 +187,12 @@ on a.name = b.name
 group by 2);
 
 
+--Output--
+BALANCE
+--------
+-612
+
+
 -- Given 3:
 
 create table transactions3(
@@ -188,5 +217,10 @@ group by month(date)
 having not(count(amount) <3 or  sum(amount) >-100) ) as b 
 on a.name = b.name
 group by 2);
+
+--Output--
+BALANCE
+--------
+20940
 
 
